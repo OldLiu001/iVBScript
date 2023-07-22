@@ -92,8 +92,8 @@ def install_kernel_spec_if_needed():
         print('Kernel Already Installed')
 
 
-allow_ansi_console_color_if_needed()
-register_tlbinf32_if_needed()
+#allow_ansi_console_color_if_needed()
+#register_tlbinf32_if_needed()
 install_kernel_spec_if_needed()
 
 with open('requirements.txt', 'r') as f:

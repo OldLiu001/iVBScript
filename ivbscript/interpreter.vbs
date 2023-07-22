@@ -75,6 +75,9 @@ Class Interpreter
             logFile.WriteLine cmd
             logFile.WriteLine Mid(cmd, Len(cmd), 1)
             Err.Clear()
+	'msgbox cmd
+	cmd = replace(cmd,"oInterpreter.HandleInspect ","")
+'msgbox cmd
             ExecuteGlobal cmd
             If Err.Number <> 0 Then
                 stderr = "Err.Description: " & Err.Description & "." & vbNewLine & "Err.Number: " & Err.Number

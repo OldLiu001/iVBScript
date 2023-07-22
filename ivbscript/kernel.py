@@ -28,7 +28,7 @@ class VBScriptKernel(Kernel):
     VBScript Kernel class
     """
     implementation = 'iVBScript'
-    language = "vbscript"
+    language = "VBScript"
     implementation_version = __version__
     banner = termcolor.colored(r'''
 d8b 888     888 888888b.    .d8888b.                   d8b          888
@@ -44,8 +44,8 @@ Y8P 888     888 888  "88b  d88P  Y88b                  Y8P          888
                                                            888
     ''', color=random.choice(list(termcolor.COLORS)))
     INTERPRETER = 'cscript.exe'
-    COMMAND_LINE_TIMEOUT = 15
-    incomplete_indent = '  '
+    COMMAND_LINE_TIMEOUT = 15 #超时
+    incomplete_indent = '  ' #某种不完全的……缩进？
     completion_regexes = {
         'sub': {'start_pattern': r'(^|\s)((private|public)\s+)?sub(\s+)[a-z_][a-z0-9_]*\s*(\(.+\))?',
                 'end_pattern': r'(^|\s)end(\s+)sub(\s|$)'},
@@ -59,35 +59,35 @@ Y8P 888     888 888  "88b  d88P  Y88b                  Y8P          888
         'property': {'start_pattern': r'(^|\s)((private|public)\s+)?property(\s+)[a-z_][a-z0-9_]*\s*(\(.+\))?',
                      'end_pattern': r'(^|\s)end(\s+)property(\s|$)'},
         'class': {'start_pattern': r'(^|\s)class(\s+)', 'end_pattern': r'(^|\s)end(\s+)class(\s|$)'}
-    }
+    } #判断某种执行完成？
 
     @property
     def language_info(self):
         return {
             "name": self.language,
             "file_extension": ".vbs",
-            "pygments_lexer": "vbscript",
+            "pygments_lexer": "VBScript",
         }
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        assert find_executable(self.INTERPRETER), f'Could not find {self.INTERPRETER}'
-        os.chdir(os.path.dirname(os.path.abspath(__file__)))
-        runtime_data_dir = os.path.join(os.getcwd(), 'runtime_data')
+        assert find_executable(self.INTERPRETER), f'Could not find {self.INTERPRETER}' #'cscript'
+        os.chdir(os.path.dirname(os.path.abspath(__file__))) #cd %~dp0
+        runtime_data_dir = os.path.join(os.getcwd(), 'runtime_data') #runtime_data目录
         if not os.path.exists(runtime_data_dir):
             os.mkdir(runtime_data_dir)
-        pid = os.getpid()
+        pid = os.getpid() #进程id
 
         self.history_manager = HistoryManager(self.get_history_path())
         self.cscript = None
         self.stdout_pos = 0
-        self.stdout_file_path = os.path.join(runtime_data_dir, f'{pid}.stdout')
+        self.stdout_file_path = os.path.join(runtime_data_dir, f'{pid}.stdout') #文件名和pid一样
         self.stderr_file_path = os.path.join(runtime_data_dir, f'{pid}.stderr')
         self.input_file_path = os.path.join(runtime_data_dir, f'{pid}.input')
         debug_log = os.path.join(runtime_data_dir, f'{pid}.log')
 
         os.environ.update({'IVBS_CMD_PATH': self.input_file_path, 'IVBS_RET_PATH': self.stderr_file_path,
-                           'IVBS_DEBUG_PATH': debug_log})
+                           'IVBS_DEBUG_PATH': debug_log}) # 给interp.vbs传参
         self.run()
 
     @classmethod
