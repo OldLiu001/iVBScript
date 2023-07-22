@@ -131,7 +131,8 @@ Y8P 888     888 888  "88b  d88P  Y88b                  Y8P          888
             input_file.write("\n".join(code.splitlines()))
 
     def _handle_vbscript_command(self, code: str, try_evaluate: bool = True, force_evaluate: bool = False) -> Dict:
-        inspect_prefix = 'oInterpreter.HandleInspect '
+        #inspect_prefix = 'oInterpreter.HandleInspect '
+        inspect_prefix = ''
         if not try_evaluate and force_evaluate:
             return {'stderr': 'Error: cant force_evaluate and not try_evaluate'}
         should_evaluate = False

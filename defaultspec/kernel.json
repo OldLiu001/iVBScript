@@ -1,6 +1,6 @@
 {
-    "argv": ["python", "-m", "ivbscript", "-f", "{connection_file}"],
+    "argv": ["python", "-m", "iVBScript", "-f", "{connection_file}"],
     "display_name": "VBScript",
-    "language": "vbscript",
+    "language": "VBScript",
     "interrupt_mode": "message"
 }
